@@ -8,20 +8,37 @@ Tout le code a été écrit côté macOS via mock JS. Personne ne l'a encore com
 
 ## TL;DR — Ce que tu dois faire
 
-1. **Cloner le repo** sur le PC Windows.
-2. **Installer les prérequis** Windows (Rust, Node 20+, VS Build Tools, WebView2).
-3. **`npm install` puis `npm run tauri:dev`** — l'app doit s'ouvrir, écran de bienvenue.
-4. **Sélectionner le dossier du serveur Minecraft Fabric d'Alex** (celui avec `run.bat`).
-5. **Cliquer Start** — vérifier que :
+### Option A — Tester l'installeur builé par GitHub (chemin court)
+
+Aucun toolchain à installer côté Windows.
+
+1. Va sur **[Releases](https://github.com/atimoz/minecraft-cockpit/releases)** → télécharge le dernier `.exe`.
+2. Installe-le → double-clic le raccourci bureau qui se pose.
+3. Sélectionne le dossier du serveur Minecraft d'Alex (celui avec `run.bat`).
+4. **Test bout-en-bout** — clique Start, vérifie :
    - Le `.bat` se lance (cmd.exe en arrière-plan, pas de fenêtre console qui pop)
-   - La console défile avec les logs `INFO/WARN/ERROR` colorés
-   - Les stats CPU/RAM du process `java.exe` apparaissent et bougent
-   - Un joueur qui se connecte apparaît dans la liste avec son IP
-   - `/say hello` envoyé depuis la barre de commande apparaît bien dans le chat in-game
-6. **Cliquer Stop** — vérifier que le `.bat` se ferme proprement (pas de monde corrompu).
-7. **Tester les onglets Paramètres et Mods** sur des vrais fichiers (`server.properties` réel, dossier `mods/` réel).
-8. **Builder l'installeur final** : `npm run tauri:build` → produit un `.exe` NSIS qui installe l'app + pose un raccourci sur le bureau.
-9. **Documenter les bugs trouvés** dans ce fichier (section « Bugs rencontrés ») et les fixer.
+   - Console défile avec logs INFO/WARN/ERROR colorés
+   - Stats CPU/RAM du `java.exe` apparaissent et bougent
+   - Un joueur qui se connecte apparaît avec son IP
+   - `/say hello` envoyé depuis CommandBar apparaît dans le chat in-game
+5. Clique Stop → vérifie arrêt propre (pas de monde corrompu, timeout 30s avant kill forcé).
+6. Teste onglets Paramètres + Mods sur les vrais fichiers (`server.properties`, dossier `mods/`).
+7. **Documente les bugs** dans ce fichier (section « Bugs rencontrés »).
+
+### Option B — Setup dev pour fix les bugs (si tu dois patcher le code)
+
+Si Option A révèle des bugs et que tu dois modifier le code, alors installer le toolchain :
+
+```powershell
+winget install Rustlang.Rustup OpenJS.NodeJS.LTS
+winget install Microsoft.VisualStudio.2022.BuildTools --override "--quiet --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.Windows11SDK.22621"
+# Redémarre PowerShell après l'install de Rust
+git clone https://github.com/atimoz/minecraft-cockpit && cd minecraft-cockpit
+npm install
+npm run tauri:dev   # mode dev avec hot-reload
+```
+
+Quand tu push tes fixes sur `main`, GitHub Actions rebuild un nouveau `.exe` automatiquement, dispo dans Releases sous le tag `latest` dans ~5 min.
 
 ---
 

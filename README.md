@@ -1,11 +1,19 @@
 # Minecraft Cockpit
 
-App de bureau minimaliste pour gérer un serveur Minecraft local. **Cross-platform : Windows + macOS** (Intel & Apple Silicon).
+App de bureau minimaliste pour gérer un serveur Minecraft local sur Windows.
 Dark mode flat, accent vert Modrinth — devient rouge quand le serveur dort.
 
-> L'installeur crée automatiquement un raccourci :
-> - **Windows** : raccourci `.lnk` sur le bureau + entrée menu Démarrer.
-> - **macOS** : l'app se pose dans `/Applications`, visible dans Launchpad et Spotlight.
+## 🎯 Installer (utilisateur final)
+
+**Tu n'as RIEN à installer comme outils de dev**. GitHub builde le `.exe` automatiquement à chaque push.
+
+1. Va sur **[Releases](https://github.com/atimoz/minecraft-cockpit/releases)**
+2. Télécharge le dernier `Minecraft Cockpit_X.Y.Z_x64-setup.exe`
+3. Double-clique → l'installeur pose l'app dans `%LOCALAPPDATA%\Programs\Minecraft Cockpit\` **et un raccourci sur le bureau**
+4. Premier lancement : si Windows SmartScreen râle → *Informations complémentaires → Exécuter quand même* (app non signée, normal)
+5. Choisis ton dossier serveur (celui qui contient `run.bat`)
+
+Voilà. Pas de Rust, pas de Node, pas de VS Build Tools.
 
 - ▶ **Start / Stop** du serveur en un clic
 - 👥 **Liste des joueurs** connectés en temps réel avec leurs IP
