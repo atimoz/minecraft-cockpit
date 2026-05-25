@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Modrinth-inspired palette ───────────────────────────────────────── */
+  --color-bg-app: #131518;       /* sidebar / deepest */
+  --color-bg-app-2: #181a1f;     /* main content area */
+  --color-bg-surface: #22262c;   /* elevated cards & sections */
+  --color-bg-surface-2: #2a2e35; /* hover row */
+  --color-bg-surface-3: #2f3238; /* inactive pills, input bg */
+  --color-border: #2c3038;
+  --color-border-soft: rgba(255, 255, 255, 0.06);
+
+  --color-text: #e8e9ea;
+  --color-text-muted: #9aa0a8;
+  --color-text-faint: #6b7280;
+
+  /* ── Accent palette ──
+     These vars are RED by default (server offline) and switch to Modrinth
+     green when the .server-running class is present on an ancestor (added
+     by <Dashboard /> when status.running). Every UI element using these
+     vars follows automatically. */
+  --color-green: #f0524a;
+  --color-green-strong: #d83a32;
+  --color-green-soft-bg: rgba(240, 82, 74, 0.14);
+  --color-green-rgb: 240, 82, 74;
+
+  --color-warn: #f5c542;
+  --color-danger: #f0524a;
+  --color-danger-strong: #d83a32;
+
+  /* Same stack as Modrinth knossos */
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Menlo", "Monaco", monospace;
+
+  /* Modrinth weight strategy : 500 = body, 600 = emphasis, 800 = headings */
+  --weight-body: 500;
+  --weight-emphasis: 600;
+  --weight-heading: 800;
+
+  --radius-card: 12px;
+  --radius-card-lg: 14px;
+  --radius-sm: 8px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: transparent;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  background: var(--color-bg-app);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Modrinth-style typography: 500 base gives text more presence on dark bg */
+  font-weight: 500;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+h1, h2, h3 {
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+input,
+textarea,
+.allow-select {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Thin scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Custom title bar drag region (Tauri) */
+.titlebar-drag {
+  -webkit-app-region: drag;
+}
+.titlebar-no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* When running outside Tauri (Vite-only preview) keep a solid background */
+html.web-preview body {
+  background: var(--color-bg-app);
+}
+
+/* When the Minecraft server is running, swap the accent vars to actual green. */
+.server-running {
+  --color-green: #1bd96a;
+  --color-green-strong: #14b85c;
+  --color-green-soft-bg: rgba(27, 217, 106, 0.14);
+  --color-green-rgb: 27, 217, 106;
+}
+
+/* Pulse ring used when server is running */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* Flat elevated card */
+@utility card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}

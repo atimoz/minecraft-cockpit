@@ -1,0 +1,39 @@
+[package]
+name = "minecraft-cockpit"
+version = "0.1.0"
+description = "Cockpit minimaliste pour serveur Minecraft"
+authors = ["Alexandre Grosjean"]
+edition = "2021"
+
+[lib]
+name = "minecraft_cockpit_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = [] }
+tauri-plugin-dialog = "2.0"
+tauri-plugin-store = "2.1"
+tauri-plugin-fs = "2.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+notify = "6"
+sysinfo = "0.32"
+regex = "1.11"
+once_cell = "1.20"
+encoding_rs = "0.8"
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1"
+log = "0.4"
+env_logger = "0.11"
+rand = "0.8"
+zip = "2"
+toml = "0.8"
+if-addrs = "0.13"
+
+[features]
+default = []
+custom-protocol = ["tauri/custom-protocol"]
